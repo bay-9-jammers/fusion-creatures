@@ -49,12 +49,13 @@ var Creature = /** @class */ (function () {
         var offsprings = [];
         var _loop_1 = function (i) {
             var newCreaturebodypartSlots = {};
+            var newCreaturebodyparts = {};
             var thisCreature = this_1;
             Object.keys(this_1.bodypartSlots).concat(Object.keys(other.bodypartSlots)).forEach(function (bodypart) {
                 newCreaturebodypartSlots[bodypart] = randomFromArray([thisCreature.bodypartSlots[bodypart], other.bodypartSlots[bodypart]]) || 0;
+                newCreaturebodyparts[bodypart] = randomFromArray([thisCreature.bodyparts[bodypart], other.bodyparts[bodypart]]);
             });
-            var bodyparts = void 0;
-            var offspring = new Creature(this_1.name.slice(0, this_1.name.length / 2) + other.name.slice(other.name.length / 2, other.name.length), randomIntRange(Math.min(this_1.fertility, other.fertility), Math.max(this_1.fertility, other.fertility)), newCreaturebodypartSlots);
+            var offspring = new Creature(this_1.name.slice(0, this_1.name.length / 2) + other.name.slice(other.name.length / 2, other.name.length), randomIntRange(Math.min(this_1.fertility, other.fertility), Math.max(this_1.fertility, other.fertility)), newCreaturebodypartSlots, newCreaturebodyparts);
             offsprings.push(offspring);
         };
         var this_1 = this;
