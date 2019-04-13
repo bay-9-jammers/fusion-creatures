@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <title>Fusion Creatures</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	  <script src="creature.js"></script>
+	  <script src="breeder.js"></script>
+	</head>
+	<body>
+		<div class="container">
+
+			<div class="row">
+				<div class="col-3">
+					<h3>Creature 1</h3>
+				  <div id="creature1">
+				  </div>
+				</div>
+			  <div class="col-3">
+			  	<h3>Creature 2</h3>
+				  <div id="creature2">
+				  </div>
+				</div>
+				<div class="col-3">
+					<h3>Creature 3</h3>
+				  <div id="creature3">
+				  </div>
+				</div>
+				<div class="col-3" id="buttons">
+					<br/>
+					<br/> 
+			  	<button class="btn btn-default" onclick="creature1Button()">Generate Creature 1</button><br/><br/>
+			  	<button class="btn btn-default" onclick="creature2Button()">Generate Creature 2</button><br/><br/>
+			  	<button class="btn btn-default" onclick="creature3Button()">Breed Creatures 1 and 2</button><br/><br/>
+			  	<button class="btn btn-default" onclick="creature4Button()">Set Creature 3 as Creature 1</button><br/><br/>
+			  	<button class="btn btn-default" onclick="creature5Button()">Set Creature 3 as Creature 2</button><br/><br/>
+			  </div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			
+			var creature1;
+			var creature2;
+			var creature3;
+
+			function creature1Button(){
+				creature1 = new Creature();
+				$("#creature1").html(creature1.render());
+			}
+
+			function creature2Button(){
+				creature2 = new Creature();
+				$("#creature2").html(creature2.render());
+			}
+
+			function creature3Button(){
+				if(!(creature1 && creature2)){
+					return;
+				}
+				creature3 = creature1.breed(creature2)[0]
+				$("#creature3").html(creature3.render());
+			}
+
+			function creature4Button(){
+				if(!creature3){
+					return;
+				}
+				creature1 = creature3;
+				$("#creature1").html(creature1.render());
+			}
+
+			function creature5Button(){
+				if(!creature3){
+					return;
+				}
+				creature2 = creature3;
+				$("#creature2").html(creature2.render());
+			}
+
+		</script>
+
+	</body>
+</html>
