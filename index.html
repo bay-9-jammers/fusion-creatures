@@ -15,72 +15,70 @@
 
 			<div class="row">
 				<div class="col-3">
-					<h3>Creature 1</h3>
-				  <div id="creature1">
+					<h3>Parent 1</h3>
+				  <div id="parent0">
 				  </div>
 				</div>
 			  <div class="col-3">
-			  	<h3>Creature 2</h3>
-				  <div id="creature2">
-				  </div>
-				</div>
-				<div class="col-3">
-					<h3>Creature 3</h3>
-				  <div id="creature3">
+			  	<h3>Parent 2</h3>
+				  <div id="parent1">
 				  </div>
 				</div>
 				<div class="col-3" id="buttons">
 					<br/>
 					<br/> 
-			  	<button class="btn btn-default" onclick="creature1Button()">Generate Creature 1</button><br/><br/>
-			  	<button class="btn btn-default" onclick="creature2Button()">Generate Creature 2</button><br/><br/>
-			  	<button class="btn btn-default" onclick="creature3Button()">Breed Creatures 1 and 2</button><br/><br/>
-			  	<button class="btn btn-default" onclick="creature4Button()">Set Creature 3 as Creature 1</button><br/><br/>
-			  	<button class="btn btn-default" onclick="creature5Button()">Set Creature 3 as Creature 2</button><br/><br/>
+			  	<button class="btn btn-default" onclick="generateParent(0)">Generate Parent 1</button><br/><br/>
+			  	<button class="btn btn-default" onclick="generateParent(1)">Generate Parent 2</button><br/><br/>
+			  	<button class="btn btn-default" onclick="breedCreature()">Breed New Creature</button><br/><br/>
 			  </div>
+			</div>
+			<div class="row" id="offspring">
+				
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			
-			var creature1;
-			var creature2;
-			var creature3;
+			var parent = [];
+			var offspring = [];
 
-			function creature1Button(){
-				creature1 = new Creature();
-				$("#creature1").html(creature1.render());
+			function generateParent(parentIndex){
+				parent[parentIndex] = new Creature();
+				$("#parent"+parentIndex).html(parent[parentIndex].render());
 			}
 
-			function creature2Button(){
-				creature2 = new Creature();
-				$("#creature2").html(creature2.render());
-			}
-
-			function creature3Button(){
-				if(!(creature1 && creature2)){
+			function setParent(parentIndex, offspringIndex){
+				if(!offspring[offspringIndex]){
 					return;
 				}
-				creature3 = creature1.breed(creature2)[0]
-				$("#creature3").html(creature3.render());
+				parent[parentIndex] = offspring[offspringIndex];
+				$("#parent"+parentIndex).html(parent[parentIndex].render());
 			}
 
-			function creature4Button(){
-				if(!creature3){
+			function breedCreature(){
+				if(!(parent[0] && parent[1])){
 					return;
 				}
-				creature1 = creature3;
-				$("#creature1").html(creature1.render());
+
+				var offspringString = "";
+				offspring = parent[0].breed(parent[1]);
+				offspring.forEach(function(offspring, index){
+					offspringString +=`
+						<div class="col-3">
+							<h3>Offspring `+(index+1)+`</h3>
+						  <div id="offspring`+index+`">`+
+						  offspring.render()+`
+						  </div>
+							<button class="btn btn-default" onclick="setParent(0, `+index+`)">Set as Parent 1</button><br/><br/>
+						  <button class="btn btn-default" onclick="setParent(1, `+index+`)">Set as Parent 2</button><br/><br/>
+					  </div>`;
+				});
+				$("#offspring").html(offspringString);
 			}
 
-			function creature5Button(){
-				if(!creature3){
-					return;
-				}
-				creature2 = creature3;
-				$("#creature2").html(creature2.render());
-			}
 
+		generateParent(0);
+		generateParent(1);
 		</script>
 
 	</body>

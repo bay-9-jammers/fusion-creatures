@@ -41,7 +41,9 @@ var Creature = /** @class */ (function () {
         Object.keys(this.bodyparts).forEach(function (bodypart) {
             bodypartsString += '<p><strong>' + capitalise(bodypart) + ' Type:</strong> ' + thisCreature.bodypartSlots[bodypart] + ' x <img src="./images/' + thisCreature.bodyparts[bodypart].image + '.png" alt="' + thisCreature.bodyparts[bodypart].image + '"><br/>(' + thisCreature.bodyparts[bodypart].traits.join(", ") + ')</p>';
         });
-        return "<p><strong>Name:</strong> " + this.name + "</p>" + bodypartsString;
+        return "<p><strong>Name:</strong> " + this.name + "</p>" +
+            "<p><strong>Fertility:</strong> " + this.fertility + "</p>" +
+            bodypartsString;
     };
     Creature.prototype.breed = function (other) {
         var offsprings = [];
