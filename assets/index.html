@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fusion Creatures</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+</head>
+<body>
+	<div class="screen" id="index">
+		<h1>Fusion Creatures</h1>
+		<ul class="menu">
+			<li class="button go-to-screen" data-target="creature-creator">Creature Creator</li>
+			<li class="button go-to-screen" data-target="breeding">Breeding</li>
+		</ul>
+	</div>
+
+
+
+
+
+	<div class="screen" id="creature-creator">
+		<h2>Creature Creator</h2>
+		<h3>Select body type</h3>
+		<div class="creature-creator-button button float-left">&larr;</div>
+		<div id="creature-creator-preview" class="float-left">
+
+		</div>
+		<div class="creature-creator-button button float-left">&rarr;</div>
+		<div id="creature-creator-wide-continue" class="button">Continue</div>
+
+
+		<a class="button go-to-screen" data-target="index">Back</a>
+	</div>
+
+
+
+
+
+
+	<div class="screen" id="breeding">
+		<h2>Breeding</h2>
+		<a class="button go-to-screen" data-target="index">Back</a>
+	</div>
+
+
+
+
+
+
+
+
+	<script src="/dependencies/jquery/dist/jquery.min.js"></script>
+	<script src="/dependencies/lodash/lodash.min.js"></script>
+	<script src="/client/client.js"></script>
+</body>
+</html>
