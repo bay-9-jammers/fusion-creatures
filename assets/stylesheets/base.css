@@ -55,6 +55,7 @@ body {
 	/*border: 1px solid black;*/
 	float: right;
 	margin-right: 50px;
+	position: relative;
 }
 
 .creature-creator-button {
@@ -71,4 +72,10 @@ body {
 
 #draw-body-controls {
 	display: none;
+}
+
+#creature-creator-tools .progress-controls {
+	width: 300px;
+	position: absolute;
+	bottom: 0px;
 }
