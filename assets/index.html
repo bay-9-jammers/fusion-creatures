@@ -19,16 +19,24 @@
 
 	<div class="screen" id="creature-creator">
 		<h2>Creature Creator</h2>
-		<h3>Select body type</h3>
-		<div class="creature-creator-button button float-left" onClick="creatureCreatorPreviousBodyType();">&larr;</div>
+		<h3 id="creature-creator-stage-title">Select body type</h3>
+		<p id="creature-creator-stage-description"></p>
 		<div id="creature-creator-preview" class="float-left">
-			<img src="/images/bodies/0.png" />
+			<img draggable="false" src="/images/bodies/0.png" />
 		</div>
-		<div class="creature-creator-button button float-left" onClick="creatureCreatorNextBodyType();">&rarr;</div>
-		<div id="creature-creator-wide-continue" class="button">Continue</div>
+		<div id="creature-creator-tools" class="float-left">
+			<div id="body-controls">
+				<div class="button" onClick="creatureCreatorNextBodyType();">Previous</div>
+				<div class="button" onClick="creatureCreatorNextBodyType();">Next</div>
+				<div class="button">Continue</div>
+				<a class="button go-to-screen" data-target="index">Back</a>
+			</div>
+			<div id="draw-body-controls">
+				ABC
+			</div>
 
-
-		<a class="button go-to-screen" data-target="index">Back</a>
+		</div>
+		<div class="clear">
 	</div>
 
 
