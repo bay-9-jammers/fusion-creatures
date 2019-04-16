@@ -78,16 +78,16 @@ var state = {
 	}
 };
 
-var tools = {
-	pencil: function(ctx, x, y, color) {
+// var tools = {
+// 	pencil: function(ctx, x, y, color) {
 
-	},
+// 	},
 
-	bucket: function(ctx, x, y, color) {
+// 	bucket: function(ctx, x, y, color) {
 
-	},
+// 	},
 
-	eraser: function(ctx, x, y, color) {
+// 	eraser: function(ctx, x, y, color) {
 		
-	}
-}
+// 	}
+// }
