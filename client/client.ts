@@ -36,9 +36,34 @@ function beginDrawingBody() {
 	$("#body-controls").hide();
 	$("#draw-body-controls").show();
 	$("#body-canvas").show();
-	$("#body-canvas").bind("click", function() {
-		alert("A");
-	})
+	$("#body-canvas").bind("mousedown", function(e) {
+		state.creature_creator.drawing_mouse_down = true;
+		var canvas : HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("body-canvas");
+		var ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D> canvas.getContext("2d");
+
+		var parentOffset = $(this).parent().offset()!;
+		var x = e.pageX - parentOffset.left;
+		var y = e.pageY - parentOffset.top;
+
+		tools[state.creature_creator.selected_tool](ctx, x, y, state.creature_creator.selected_color);
+	});
+
+	$("#body-canvas").bind("mouseup", function() {
+		state.creature_creator.drawing_mouse_down = false;
+	});
+
+	$("#body-canvas").bind("mousemove", function(e) {
+		if (state.creature_creator.drawing_mouse_down) {
+			var canvas : HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("body-canvas");
+			var ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D> canvas.getContext("2d");
+
+			var parentOffset = $(this).parent().offset()!;
+			var x = e.pageX - parentOffset.left;
+			var y = e.pageY - parentOffset.top;
+
+			tools[state.creature_creator.selected_tool](ctx, x, y, state.creature_creator.selected_color);
+		}
+	});
 }
 
 function backToBodySelector() {
@@ -69,25 +94,53 @@ function updateCreatureCreatorDrawingBody() {
 	$(".color[data-color='" + state.creature_creator.selected_color + "']").addClass("selected");
 }
 
+interface CreatureCreatorState {
+	body_type: number;
+	selected_tool: string;
+	selected_color: string;
+	drawing_mouse_down: boolean;
+}
 
-var state = {
+interface State {
+	creature_creator: CreatureCreatorState;
+}
+
+
+var state : State = {
 	creature_creator: {
 		body_type: 0,
 		selected_tool: "pencil",
-		selected_color: "000"
+		selected_color: "000",
+		drawing_mouse_down: false
 	}
 };
 
-// var tools = {
-// 	pencil: function(ctx, x, y, color) {
 
-// 	},
+const DRAWING_RADIUS = 5;
 
-// 	bucket: function(ctx, x, y, color) {
+interface Tools {
+	[key: string]: (ctx: CanvasRenderingContext2D, x: number, y: number, color: string) => void;
+}
 
-// 	},
+var tools: Tools = {
+	pencil: function(ctx: CanvasRenderingContext2D, x: number, y: number, color: string) {
+		ctx.fillStyle = "#" + color;
+	    ctx.beginPath();
+	    ctx.arc(x, y, DRAWING_RADIUS, 0, 2 * Math.PI);
+	    ctx.fill();
+	},
 
-// 	eraser: function(ctx, x, y, color) {
-		
-// 	}
-// }
+	bucket: function(ctx: CanvasRenderingContext2D, x: number, y: number, color: string) {
+
+	},
+
+	eraser: function(ctx: CanvasRenderingContext2D, x: number, y: number, color: string) {
+		ctx.save();
+	    ctx.beginPath();
+	    ctx.arc(x, y, DRAWING_RADIUS, 0, 2 * Math.PI);
+        ctx.clip();
+	    ctx.clearRect(x - DRAWING_RADIUS - 1, y - DRAWING_RADIUS - 1,
+                      DRAWING_RADIUS * 2 + 2, DRAWING_RADIUS * 2 + 2);
+	    ctx.restore();
+	}
+}
