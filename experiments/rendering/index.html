@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#resources {
+			display: none;
+		}
+
+		textarea {
+			height: 500px;
+			width: 300px;
+		}
+
+		.flip {
+			-webkit-transform: scaleX(-1);
+			transform: scaleX(-1);
+		}
+	</style>
+</head>
+<body onload="init();">
+	<div id="resources">
+		<img src="img/body/1.png" id="body1" />
+		<img src="img/body/2.png" id="body2" />
+		<img src="img/body/3.png" id="body3" />
+		<img src="img/body/4.png" id="body4" />
+		<img src="img/heads/1.png" id="head1" />
+		<img src="img/heads/2.png" id="head2" />
+		<img src="img/heads/3.png" id="head3" />
+		<img src="img/arms/1.png" id="arm1" />
+		<img src="img/arms/2.png" id="arm2" />
+		<img src="img/arms/3.png" id="arm3" />
+		<img src="img/legs/1.png" id="leg1" />
+		<img src="img/legs/2.png" id="leg2" />
+		<img src="img/legs/3.png" id="leg3" />
+		<img src="img/torso/1.png" id="torso1" />
+		<img src="img/torso/2.png" id="torso2" />
+		<img src="img/torso/3.png" id="torso3" />
+		<img src="img/torso/4.png" id="torso4" />
+		<img src="img/torso/5.png" id="torso5" />
+		<img src="img/torso/6.png" id="torso6" />
+		<img src="img/torso/7.png" id="torso7" />
+		<img src="img/torso/8.png" id="torso8" />
+	</div>
+	<textarea id="description">
+		{
+			"body": {
+				"id": "4"
+			},
+			"torso": {
+				"id": "4"
+			},
+			"heads": [
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"}
+			],
+			"arms": [
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"}
+			],
+			"legs": [
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"},
+				{"id": "1"}
+			]
+		}
+	</textarea>
+	<canvas id="myCanvas" width="500" height="700"></canvas>
+	<button onClick="doRender();">Render</button>
+	<button onClick="randomize();">Randomize</button>
+	<script>
+		var bodies = [
+			{},	
+			{
+				"midpoint": 230,
+				"heads": [
+					[],
+					[[200, 150]],
+					[[160, 150], [250, 150]],
+					[[160, 165], [250, 165], [200, 75]],
+					[[160, 165], [250, 165], [160, 75], [250, 75]]
+				],
+				"arms": [
+					[],
+					[[80, 100]],
+					[[80, 100], [420, 100]],
+					[[80, 100], [420, 100], [110, 200]],
+					[[80, 100], [420, 100], [110, 200], [360, 200]],
+				],
+				"legs": [
+					[],
+					[[170, 470]],
+					[[150, 450], [190, 450]],
+					[[150, 450], [190, 450], [170, 300]],
+					[[150, 450], [190, 450], [170, 300], [230, 300]]
+				]
+			},
+			{
+				"midpoint": 225,
+				"heads": [
+					[],
+					[[200, 300]],
+					[[170, 300], [255, 307]],
+					[[100, 300], [180, 307], [260, 310]],
+					[[95, 300], [175, 307], [255, 310], [335, 310]],
+				],
+				"arms": [
+					[],
+					[[64, 300]],
+					[[64, 300], [412, 300]],
+					[[64, 300], [412, 300], [245, 100]],
+					[[64, 300], [412, 300], [245, 100], [202, 100]],
+				],
+				"legs": [
+					[],
+					[[240, 427]],
+					[[200, 424], [260, 427]],
+					[[200, 424], [260, 427], [140, 410]],
+					[[200, 424], [260, 427], [140, 410], [320, 425]],
+				]
+			},
+			{
+				"midpoint": 225,
+				"heads": [
+					[],
+					[[200, 180]],
+					[[200, 110], [200, 300]],
+					[[200, 110], [200, 300], [200, 205]],
+					[[120, 100], [287, 65], [100, 360], [330, 350]],
+				],
+				"arms": [
+					[],
+					[[91, 300]],
+					[[91, 300], [380, 300]],
+					[[91, 300], [380, 300], [345, 200]],
+					[[91, 300], [380, 300], [345, 200], [93, 200]],
+				],
+				"legs": [
+					[],
+					[[240, 423]],
+					[[200, 424], [270, 423]],
+					[[200, 424], [270, 423], [120, 458]],
+					[[200, 424], [270, 423], [120, 458], [360, 448]],
+				]
+			},
+			{
+				"midpoint": 225,
+				"heads": [
+					[],
+					[[200, 180]],
+					[[200, 110], [200, 300]],
+					[[200, 110], [200, 300], [200, 205]],
+					[[200, 110], [200, 300], [150, 205], [240, 205]],
+				],
+				"arms": [
+					[],
+					[[80, 180]],
+					[[80, 180], [360, 180]],
+					[[80, 180], [360, 180], [90, 330]],
+					[[80, 180], [360, 180], [90, 330], [380, 330]],
+				],
+				"legs": [
+					[],
+					[[240, 405]],
+					[[200, 405], [270, 405]],
+					[[200, 405], [270, 405], [140, 380]],
+					[[200, 405], [270, 405], [140, 380], [330, 390]],
+				]
+			}
+		];
+
+		function init() {
+			flipResources();
+			randomize();
+		}
+
+		function flipResources() {
+			var resources = document.getElementById("resources");
+			var children = resources.getElementsByTagName("img");
+			for (i in children) {
+				if (children.hasOwnProperty(i)) {
+					flipResource(children[i], resources);
+				}
+			}
+		}
+
+		function flipResource(img, resources) {
+			var newImg = new Image();
+			var c = document.createElement('canvas');
+			c.width = img.width;
+			c.height = img.height;
+			var ctx = c.getContext('2d');
+			ctx.scale(-1,1);
+			ctx.drawImage(img,-img.width,0);
+			newImg.src = c.toDataURL();
+			newImg.id = img.id + "-flipped";
+			resources.appendChild(newImg);
+		}
+
+		function doRender() {
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
+			var description = JSON.parse(document.getElementById("description").value);
+			render(description, canvas, ctx);
+		}
+
+		function render(description, canvas, ctx) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			rendertorso(description, ctx);
+			renderheads(description, ctx);
+			renderarms(description, ctx);
+			renderlegs(description, ctx);
+		}
+
+		function rendertorso(description, ctx) {
+			var img = document.getElementById("torso" + description.torso.id);
+			ctx.drawImage(img, 0, 0);
+		}
+
+		function renderheads(description, ctx) {
+			var numheads = description.heads.length;
+			var headpositions = bodies[description.body.id].heads[numheads];
+
+			for (i in headpositions) {
+				renderhead(ctx, description.heads[i], headpositions[i]);
+			}
+		}
+
+		function renderhead(ctx, head, position) {
+			var img = document.getElementById("head" + head.id);
+			ctx.drawImage(img, position[0], position[1]);
+		}
+
+		function renderarms(description, ctx) {
+			var numarms = description.arms.length;
+			var armpositions = bodies[description.body.id].arms[numarms];
+			for (i in armpositions) {
+				renderarm(ctx, bodies[description.body.id], description.arms[i], armpositions[i]);
+			}
+		}
+
+		function renderarm(ctx, body, arm, position) {
+			var elementid = "arm" + arm.id;
+			if (position[0] > body.midpoint) {
+				elementid += "-flipped"
+			}
+			var img = document.getElementById(elementid);
+			ctx.drawImage(img, position[0], position[1]);
+		}
+
+		function renderlegs(description, ctx) {
+			var numlegs = description.legs.length;
+			var legpositions = bodies[description.body.id].legs[numlegs];
+			for (i in legpositions) {
+				renderleg(ctx, bodies[description.body.id], description.legs[i], legpositions[i]);
+			}
+		}
+
+		function renderleg(ctx, body, arm, position) {
+			var elementid = "leg" + arm.id;
+			if (position[0] > body.midpoint) {
+				elementid += "-flipped"
+			}
+			var img = document.getElementById(elementid);
+			ctx.drawImage(img, position[0], position[1]);
+		}
+
+		function randomize() {
+			var body = Math.floor(Math.random() * 4) + 1;	
+			var torso_id = body;
+			if (Math.random() >= 0.5) {
+				torso_id += 4;
+			}
+			var heads = [];
+
+			for (i = 0; i < 4; i++) {
+				if (Math.random() >= 0.8) {
+					heads.push({
+						"id": Math.floor(Math.random() * 3) + 1
+					});
+				}
+			}
+
+			var arms = [];
+
+			for (i = 0; i < 4; i++) {
+				if (Math.random() >= 0.7) {
+					arms.push({
+						"id": Math.floor(Math.random() * 3) + 1
+					});
+				}
+			}
+
+			var legs = [];
+
+
+			for (i = 0; i < 4; i++) {
+				if (Math.random() >= 0.7) {
+					legs.push({
+						"id": Math.floor(Math.random() * 3) + 1
+					});
+				}
+			}
+			json = {
+				"body": {
+					"id": body
+				},
+				"torso": {
+					"id": torso_id
+				},
+				"heads": heads,
+				"arms": arms,
+				"legs": legs
+			}
+			document.getElementById("description").value = JSON.stringify(json, null, 2);
+			doRender();
+		}
+	</script>
+</body>
+</html>

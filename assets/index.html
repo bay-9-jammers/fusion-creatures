@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fusion Creatures</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+</head>
+<body>
+	<div class="screen" id="index">
+		<h1>Fusion Creatures</h1>
+		<ul class="menu">
+			<li class="button go-to-screen" data-target="creature-creator">Creature Creator</li>
+			<li class="button go-to-screen" data-target="breeding">Breeding</li>
+			<li class="button go-to-screen" data-target="battle">Battle</li>
+		</ul>
+	</div>
+
+
+
+
+
+	<div class="screen" id="creature-creator">
+		<h2>Creature Creator</h2>
+		<h3 id="creature-creator-stage-title">Select body type</h3>
+		<p id="creature-creator-stage-description"></p>
+		<div id="creature-creator-preview" class="float-left">
+			<img draggable="false" src="/images/bodies/0.png" />
+			<canvas width="400" height="400" id="body-canvas"/>
+		</div>
+		<div id="creature-creator-tools" class="float-left">
+			<div id="body-controls">
+				<div class="button" onClick="creatureCreatorNextBodyType();">Previous</div>
+				<div class="button" onClick="creatureCreatorNextBodyType();">Next</div>
+				<div class="progress-controls">
+					<div class="button" onClick="beginDrawingBody();">Continue</div>
+					<a class="button go-to-screen" data-target="index">Back</a>
+				</div>
+			</div>
+			<div id="draw-body-controls">
+				<strong>Tool</strong><br>
+				<img src="/images/tools/pencil.png" class="tool selected" data-tool="pencil" />
+				<!-- <img src="/images/tools/bucket.png" class="tool" data-tool="bucket" /> -->
+				<img src="/images/tools/eraser.png" class="tool" data-tool="eraser" />
+				<div class="clear"></div>
+				<strong>Color</strong><br>
+				<div class="color selected" data-color="000" style="background-color: #000"><img src="/images/tools/dark-icon.png"></div>
+				<div class="color" data-color="F00" style="background-color: #F00"><img src="/images/tools/fire-icon.png"></div>
+				<div class="color" data-color="00F" style="background-color: #00F"><img src="/images/tools/water-icon.png"></div>
+				<div class="color" data-color="0F0" style="background-color: #0F0"><img src="/images/tools/grass-icon.png"></div>
+				<div class="color" data-color="666" style="background-color: #666"><img src="/images/tools/rock-icon.png"></div>
+				<div class="color" data-color="FF0" style="background-color: #FF0"><img src="/images/tools/lightning-icon.png"></div>
+				<div class="color" data-color="aad4e5" style="background-color: #aad4e5"><img src="/images/tools/ice-icon.png"></div>
+				<div class="color" data-color="9400D3" style="background-color: #9400D3"><img src="/images/tools/poison-icon.png"></div>
+				<div class="color" data-color="87D37C" style="background-color: #87D37C"><img src="/images/tools/bug-icon.png"></div>
+				<div class="color" data-color="DDD" style="background-color: #DDD"><img src="/images/tools/steel-icon.png"></div>
+				
+				
+
+				<div class="progress-controls">
+					<div class="button">Continue</div>
+					<div class="button" onClick="backToBodySelector();">Back</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear">
+        </div>
+	</div>
+
+
+	<div class="screen" id="breeding">
+		<h2>Breeding</h2>
+		<a class="button go-to-screen" data-target="index">Back</a>
+	</div>
+
+	<div class="screen" id="battle">
+		<h2>Battle</h2>
+        <a class="button simulate-battle">Run Battle Simulation</a>
+		<a class="button go-to-screen" data-target="index">Back</a>
+	</div>
+
+	<script src="/dependencies/jquery/dist/jquery.min.js"></script>
+	<script src="/dependencies/lodash/lodash.min.js"></script>
+	<script src="/client/client.js"></script>
+</body>
+</html>
