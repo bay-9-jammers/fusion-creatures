@@ -246,11 +246,22 @@ class Bodypart{
 		for(let i = 0; i < randomIntRange(1, traitSlots); i++){
 
 			let trait : Trait = TRAIT_LIST[traitKeys[Math.floor(Math.random() * traitKeys.length)]];
-			//TODO: CHECK THAT THERE ARE NO TYPE-DUPLICATES (e.g. Damage1 *and* Damage3)
-			traits.push(trait);
+			
+			//THIS CURRENTLY PREVENTS *ALL* TRAIT-TYPE DUPLICATES
+			//This can be GOOD (e.g. no Ugly *and* Cute, or Damage1 *and* Damage3)
+			//This can ALSO be BAD (e.g. no Damage1 *and* Speed3)
+			let duplicate : boolean = false;
+			traits.forEach(function(t : Trait){
+				if(Object.prototype.toString.call(trait) == Object.prototype.toString.call(t)){
+					duplicate = true;
+				}
+			})
+
+			if(!duplicate){
+				traits.push(trait);	
+			}
 		}
 
-		console.log(traits);
 		return traits;
 	}
 }

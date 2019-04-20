@@ -210,13 +210,23 @@ var Bodypart = /** @class */ (function () {
     Bodypart.prototype.generateStartingTraits = function (traitSlots) {
         var traits = [];
         var traitKeys = Object.keys(TRAIT_LIST);
-        //Generate between 1 and MAX traits
-        for (var i = 0; i < randomIntRange(1, traitSlots); i++) {
+        var _loop_2 = function (i) {
             var trait = TRAIT_LIST[traitKeys[Math.floor(Math.random() * traitKeys.length)]];
             //TODO: CHECK THAT THERE ARE NO TYPE-DUPLICATES (e.g. Damage1 *and* Damage3)
-            traits.push(trait);
+            var duplicate = false;
+            traits.forEach(function (t) {
+                if (Object.prototype.toString.call(trait) == Object.prototype.toString.call(t)) {
+                    duplicate = true;
+                }
+            });
+            if (!duplicate) {
+                traits.push(trait);
+            }
+        };
+        //Generate between 1 and MAX traits
+        for (var i = 0; i < randomIntRange(1, traitSlots); i++) {
+            _loop_2(i);
         }
-        console.log(traits);
         return traits;
     };
     return Bodypart;
