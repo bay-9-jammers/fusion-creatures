@@ -1,218 +1,6 @@
 let randomNames : string[] = ["Velocosaur", "Robototron", "Swimmfiish", "Brootgroot", "Deathwatch", "Pikahmoone"];
 let randomBodyparts : string[] = ["red", "blue", "green", "cyan", "magenta", "yellow"]
 
-
-//TODO: Make Traits Classes Again
-
-// abstract class Trait{
-
-// 	constructor(public name : string, public level : number, public spawnChance : number, public despawnChance : number, public mutateUpChance : number, public mutateDownChance : number){}
-
-// 	toString() : string{
-// 		return this.name;
-// 	}
-
-// }
-
-
-// class StatTrait extends Trait{
-
-// 	constructor(name : string, level : number,  spawnChance : number, despawnChance : number, mutateUpChance : number, mutateDownChance : number, public stat : string){
-// 		super(name, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance);
-// 	}
-
-// }
-
-
-const TRAIT_LIST : object = {
-
-	////////////////////////////////////////
-	// 			STAT TRAITS				  //
-	////////////////////////////////////////
-
-	//DAMAGE
-	"damage1": {
-		"name": "Damage (1)",
-		"type": "stat",
-		"stat": "damage",
-		"level": 1,
-		"stats": function(creature : Creature) : void{creature.attackDamage += 1;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.2,
-		"mutateDownChance": 0
-	},
-	"damage2": {
-		"name": "Damage (2)",
-		"type": "stat",
-		"stat": "damage",
-		"level": 2,
-		"stats": function(creature : Creature) : void{creature.attackDamage += 2;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.25,
-		"mutateDownChance": 0.1
-	},
-	"damage3": {
-		"name": "Damage (3)",
-		"type": "stat",
-		"stat": "damage",
-		"level": 3,
-		"stats": function(creature : Creature) : void{creature.attackDamage += 3; creature.maxHealth -= 1;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.25,
-		"mutateDownChance": 0.1
-	},
-	"damage4": {
-		"name": "Damage (4)",
-		"type": "stat",
-		"stat": "damage",
-		"level": 4,
-		"stats": function(creature : Creature) : void{creature.attackDamage += 4; creature.maxHealth -= 3;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.33,
-		"mutateDownChance": 0.25
-	},
-	"damage5": {
-		"name": "Damage (5)",
-		"type": "stat",
-		"stat": "damage",
-		"level": 5,
-		"stats": function(creature : Creature) : void{creature.attackDamage += 5; creature.maxHealth -= 5;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0,
-		"mutateDownChance": 0.1
-	},
-
-
-	//ATTACK SPEED
-	"speed1": {
-		"name": "Speed (1)",
-		"type": "stat",
-		"stat": "speed",
-		"level": 1,
-		"stats": function(creature : Creature) : void{creature.attackSpeed += 0.1;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.2,
-		"mutateDownChance": 0
-	},
-	"speed2": {
-		"name": "Speed (2)",
-		"type": "stat",
-		"stat": "speed",
-		"level": 2,
-		"stats": function(creature : Creature) : void{creature.attackSpeed += 0.2;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.25,
-		"mutateDownChance": 0.1
-	},
-	"speed3": {
-		"name": "Speed (3)",
-		"type": "stat",
-		"stat": "speed",
-		"level": 3,
-		"stats": function(creature : Creature) : void{creature.attackSpeed += 0.3; creature.armour -= 1;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.25,
-		"mutateDownChance": 0.1
-	},
-	"speed4": {
-		"name": "Speed (4)",
-		"type": "stat",
-		"stat": "Speed",
-		"level": 4,
-		"stats": function(creature : Creature) : void{creature.attackSpeed += 0.4; creature.armour -= 3;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.33,
-		"mutateDownChance": 0.25
-	},
-	"speed5": {
-		"name": "Speed (5)",
-		"type": "stat",
-		"stat": "speed",
-		"level": 5,
-		"stats": function(creature : Creature) : void{creature.attackSpeed += 0.5; creature.armour -= 5;},
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0,
-		"mutateDownChance": 0.1
-	},
-
-
-	////////////////////////////////////////
-	// 			MISC TRAITS				  //
-	////////////////////////////////////////
-
-	"cute1": {
-		"name": "Kinda Cute",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 1.05;},
-		"level": 1,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0
-	},
-	"cute2": {
-		"name": "Cute",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 1.1;},
-		"level": 2,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0.1
-	},
-	"cute3": {
-		"name": "Super Cute",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 1.15;},
-		"level": 3,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0
-	},
-
-	"ugly1": {
-		"name": "Kinda Ugly",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 0.95;},
-		"level": 1,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0
-	},
-	"ugly2": {
-		"name": "Ugly",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 0.9;},
-		"level": 2,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0.1
-	},
-	"ugly3": {
-		"name": "Super Ugly",
-		"type": "value",
-		"value": function(creature : Creature) : void{creature.value *= 0.85;},
-		"level": 3,
-		"spawnChance": 0.01,
-		"despawnChance": 0.01,
-		"mutateUpChance": 0.1,
-		"mutateDownChance": 0
-	},
-}
-
 function randomIntRange(min : number, max : number) : number{
 
 	if (min > max){
@@ -234,6 +22,65 @@ function capitalise(s : string) : string
 {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+
+abstract class Trait{
+
+	constructor(public baseName : string, public readableName : string, public level : number, public spawnChance : number, public despawnChance : number, public mutateUpChance : number, public mutateDownChance : number){}
+
+	toString() : string{
+		return this.readableName;
+	}
+}
+
+
+class StatTrait extends Trait {
+
+	constructor(baseName : string, readableName : string, level : number,  spawnChance : number, despawnChance : number, mutateUpChance : number, mutateDownChance : number, public stats : (creature : Creature) => void){
+		super(baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance);
+	}
+}
+
+
+class ValueTrait extends Trait {
+
+	constructor(baseName : string, readableName : string, level : number,  spawnChance : number, despawnChance : number, mutateUpChance : number, mutateDownChance : number, public value : (creature : Creature) => void){
+		super(baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance);
+	}
+}
+
+const TRAIT_LIST : object = {
+
+	////////////////////////////////////////
+	// 			STAT TRAITS				  //
+	////////////////////////////////////////
+
+	//DAMAGE
+	"damage1": new StatTrait("damage", "Damage (1)", 1, 0.01, 0.01, 0.25, 0.00, function(creature : Creature) : void {creature.attackDamage += 1; }),
+	"damage2": new StatTrait("damage", "Damage (2)", 2, 0.01, 0.01, 0.25, 0.10, function(creature : Creature) : void {creature.attackDamage += 2; }),
+	"damage3": new StatTrait("damage", "Damage (3)", 3, 0.01, 0.01, 0.25, 0.10, function(creature : Creature) : void {creature.attackDamage += 3; creature.maxHealth -= 1; }),
+	"damage4": new StatTrait("damage", "Damage (4)", 4, 0.01, 0.01, 0.33, 0.25, function(creature : Creature) : void {creature.attackDamage += 4; creature.maxHealth -= 3; }),
+	"damage5": new StatTrait("damage", "Damage (5)", 5, 0.01, 0.01, 0.00, 0.33, function(creature : Creature) : void {creature.attackDamage += 5; creature.maxHealth -= 5; }),
+
+	"speed1": new StatTrait("speed", "Speed (1)", 1, 0.01, 0.01, 0.25, 0.00, function(creature : Creature) : void {creature.attackSpeed += 1; }),
+	"speed2": new StatTrait("speed", "Speed (2)", 2, 0.01, 0.01, 0.25, 0.10, function(creature : Creature) : void {creature.attackSpeed += 2; }),
+	"speed3": new StatTrait("speed", "Speed (3)", 3, 0.01, 0.01, 0.25, 0.10, function(creature : Creature) : void {creature.attackSpeed += 3; creature.armour -= 1; }),
+	"speed4": new StatTrait("speed", "Speed (4)", 4, 0.01, 0.01, 0.33, 0.25, function(creature : Creature) : void {creature.attackSpeed += 4; creature.armour -= 3; }),
+	"speed5": new StatTrait("speed", "Speed (5)", 5, 0.01, 0.01, 0.00, 0.33, function(creature : Creature) : void {creature.attackSpeed += 5; creature.armour -= 5; }),
+
+	////////////////////////////////////////
+	// 			MISC TRAITS				  //
+	////////////////////////////////////////
+
+	"cute1": new ValueTrait("cute", "Kinda Cute", 1, 0.01, 0.01, 0.10, 0.00, function(creature : Creature) : void {creature.value *= 1.05; }),
+	"cute2": new ValueTrait("cute", "Cute",       2, 0.01, 0.01, 0.10, 0.10, function(creature : Creature) : void {creature.value *= 1.10; }),
+	"cute3": new ValueTrait("cute", "Super Cute", 3, 0.01, 0.01, 0.00, 0.10, function(creature : Creature) : void {creature.value *= 1.15; }),
+
+	"ugly1": new ValueTrait("ugly", "Kinda Ugly", 1, 0.01, 0.01, 0.10, 0.00, function(creature : Creature) : void {creature.value *= 0.95; }),
+	"ugly2": new ValueTrait("ugly", "Ugly",       2, 0.01, 0.01, 0.10, 0.10, function(creature : Creature) : void {creature.value *= 0.90; }),
+	"ugly3": new ValueTrait("ugly", "Super Ugly", 3, 0.01, 0.01, 0.00, 0.10, function(creature : Creature) : void {creature.value *= 0.85; })
+}
+
 
 class Creature {
 
@@ -261,8 +108,8 @@ class Creature {
 		let thisCreature : Creature = this;
 		Object.keys(this.bodyparts).forEach(function(bodypart){
 			thisCreature.bodyparts[bodypart].traits.forEach(function(trait){
-				if(trait["type"] == "stat"){
-					trait["stats"](thisCreature);
+				if(trait instanceof StatTrait){
+					trait.stats(thisCreature);
 				}
 			});
 		});
@@ -290,7 +137,7 @@ class Creature {
 			if (thisCreature.bodyparts[bodypart].traits.length > 0){
 				bodypartsString += '('
 				thisCreature.bodyparts[bodypart].traits.forEach(function(trait){
-					bodypartsString += trait.name + ", ";
+					bodypartsString += trait.readableName + ", ";
 				});
 				bodypartsString = bodypartsString.slice(0, -2);
 				bodypartsString += ')';
@@ -384,27 +231,26 @@ class Creature {
 
 class Bodypart{
 
-	constructor(public image? : string, public traitSlots? : number, public traits? : object[]){
+	constructor(public image? : string, public traitSlots? : number, public traits? : Trait[]){
 		this.image = image || randomFromArray(randomBodyparts);
 		this.traitSlots = traitSlots || randomIntRange(1, 4);
 		this.traits = traits || this.generateStartingTraits(this.traitSlots); //This might cause body parts that don't have any traits to spontaneously generate traits!!!! 
 	}
 
-	private generateStartingTraits(traitSlots : number) : object[]{
+	private generateStartingTraits(traitSlots : number) : Trait[]{
 
-		let traits : object[] = [];
-
+		let traits : Trait[] = [];
 		let traitKeys : string[] = Object.keys(TRAIT_LIST);
-		
 
 		//Generate between 1 and MAX traits
 		for(let i = 0; i < randomIntRange(1, traitSlots); i++){
 
-			let trait = TRAIT_LIST[traitKeys[Math.floor(Math.random() * traitKeys.length)]];
+			let trait : Trait = TRAIT_LIST[traitKeys[Math.floor(Math.random() * traitKeys.length)]];
 			//TODO: CHECK THAT THERE ARE NO TYPE-DUPLICATES (e.g. Damage1 *and* Damage3)
 			traits.push(trait);
 		}
 
+		console.log(traits);
 		return traits;
 	}
 }

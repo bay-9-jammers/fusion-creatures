@@ -1,197 +1,18 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var randomNames = ["Velocosaur", "Robototron", "Swimmfiish", "Brootgroot", "Deathwatch", "Pikahmoone"];
 var randomBodyparts = ["red", "blue", "green", "cyan", "magenta", "yellow"];
-//TODO: Make Traits Classes Again
-// abstract class Trait{
-// 	constructor(public name : string, public level : number, public spawnChance : number, public despawnChance : number, public mutateUpChance : number, public mutateDownChance : number){}
-// 	toString() : string{
-// 		return this.name;
-// 	}
-// }
-// class StatTrait extends Trait{
-// 	constructor(name : string, level : number,  spawnChance : number, despawnChance : number, mutateUpChance : number, mutateDownChance : number, public stat : string){
-// 		super(name, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance);
-// 	}
-// }
-var TRAIT_LIST = {
-    ////////////////////////////////////////
-    // 			STAT TRAITS				  //
-    ////////////////////////////////////////
-    //DAMAGE
-    "damage1": {
-        "name": "Damage (1)",
-        "type": "stat",
-        "stat": "damage",
-        "level": 1,
-        "stats": function (creature) { creature.attackDamage += 1; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.2,
-        "mutateDownChance": 0
-    },
-    "damage2": {
-        "name": "Damage (2)",
-        "type": "stat",
-        "stat": "damage",
-        "level": 2,
-        "stats": function (creature) { creature.attackDamage += 2; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.25,
-        "mutateDownChance": 0.1
-    },
-    "damage3": {
-        "name": "Damage (3)",
-        "type": "stat",
-        "stat": "damage",
-        "level": 3,
-        "stats": function (creature) { creature.attackDamage += 3; creature.maxHealth -= 1; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.25,
-        "mutateDownChance": 0.1
-    },
-    "damage4": {
-        "name": "Damage (4)",
-        "type": "stat",
-        "stat": "damage",
-        "level": 4,
-        "stats": function (creature) { creature.attackDamage += 4; creature.maxHealth -= 3; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.33,
-        "mutateDownChance": 0.25
-    },
-    "damage5": {
-        "name": "Damage (5)",
-        "type": "stat",
-        "stat": "damage",
-        "level": 5,
-        "stats": function (creature) { creature.attackDamage += 5; creature.maxHealth -= 5; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0,
-        "mutateDownChance": 0.1
-    },
-    //ATTACK SPEED
-    "speed1": {
-        "name": "Speed (1)",
-        "type": "stat",
-        "stat": "speed",
-        "level": 1,
-        "stats": function (creature) { creature.attackSpeed += 0.1; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.2,
-        "mutateDownChance": 0
-    },
-    "speed2": {
-        "name": "Speed (2)",
-        "type": "stat",
-        "stat": "speed",
-        "level": 2,
-        "stats": function (creature) { creature.attackSpeed += 0.2; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.25,
-        "mutateDownChance": 0.1
-    },
-    "speed3": {
-        "name": "Speed (3)",
-        "type": "stat",
-        "stat": "speed",
-        "level": 3,
-        "stats": function (creature) { creature.attackSpeed += 0.3; creature.armour -= 1; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.25,
-        "mutateDownChance": 0.1
-    },
-    "speed4": {
-        "name": "Speed (4)",
-        "type": "stat",
-        "stat": "Speed",
-        "level": 4,
-        "stats": function (creature) { creature.attackSpeed += 0.4; creature.armour -= 3; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.33,
-        "mutateDownChance": 0.25
-    },
-    "speed5": {
-        "name": "Speed (5)",
-        "type": "stat",
-        "stat": "speed",
-        "level": 5,
-        "stats": function (creature) { creature.attackSpeed += 0.5; creature.armour -= 5; },
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0,
-        "mutateDownChance": 0.1
-    },
-    ////////////////////////////////////////
-    // 			MISC TRAITS				  //
-    ////////////////////////////////////////
-    "cute1": {
-        "name": "Kinda Cute",
-        "type": "value",
-        "value": function (creature) { creature.value *= 1.05; },
-        "level": 1,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0
-    },
-    "cute2": {
-        "name": "Cute",
-        "type": "value",
-        "value": function (creature) { creature.value *= 1.1; },
-        "level": 2,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0.1
-    },
-    "cute3": {
-        "name": "Super Cute",
-        "type": "value",
-        "value": function (creature) { creature.value *= 1.15; },
-        "level": 3,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0
-    },
-    "ugly1": {
-        "name": "Kinda Ugly",
-        "type": "value",
-        "value": function (creature) { creature.value *= 0.95; },
-        "level": 1,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0
-    },
-    "ugly2": {
-        "name": "Ugly",
-        "type": "value",
-        "value": function (creature) { creature.value *= 0.9; },
-        "level": 2,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0.1
-    },
-    "ugly3": {
-        "name": "Super Ugly",
-        "type": "value",
-        "value": function (creature) { creature.value *= 0.85; },
-        "level": 3,
-        "spawnChance": 0.01,
-        "despawnChance": 0.01,
-        "mutateUpChance": 0.1,
-        "mutateDownChance": 0
-    }
-};
 function randomIntRange(min, max) {
     if (min > max) {
         var x = min;
@@ -207,6 +28,64 @@ function randomFromArray(array) {
 function capitalise(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
+var Trait = /** @class */ (function () {
+    function Trait(baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance) {
+        this.baseName = baseName;
+        this.readableName = readableName;
+        this.level = level;
+        this.spawnChance = spawnChance;
+        this.despawnChance = despawnChance;
+        this.mutateUpChance = mutateUpChance;
+        this.mutateDownChance = mutateDownChance;
+    }
+    Trait.prototype.toString = function () {
+        return this.readableName;
+    };
+    return Trait;
+}());
+var StatTrait = /** @class */ (function (_super) {
+    __extends(StatTrait, _super);
+    function StatTrait(baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance, stats) {
+        var _this = _super.call(this, baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance) || this;
+        _this.stats = stats;
+        return _this;
+    }
+    return StatTrait;
+}(Trait));
+var ValueTrait = /** @class */ (function (_super) {
+    __extends(ValueTrait, _super);
+    function ValueTrait(baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance, value) {
+        var _this = _super.call(this, baseName, readableName, level, spawnChance, despawnChance, mutateUpChance, mutateDownChance) || this;
+        _this.value = value;
+        return _this;
+    }
+    return ValueTrait;
+}(Trait));
+var TRAIT_LIST = {
+    ////////////////////////////////////////
+    // 			STAT TRAITS				  //
+    ////////////////////////////////////////
+    //DAMAGE
+    "damage1": new StatTrait("damage", "Damage (1)", 1, 0.01, 0.01, 0.25, 0.00, function (creature) { creature.attackDamage += 1; }),
+    "damage2": new StatTrait("damage", "Damage (2)", 2, 0.01, 0.01, 0.25, 0.10, function (creature) { creature.attackDamage += 2; }),
+    "damage3": new StatTrait("damage", "Damage (3)", 3, 0.01, 0.01, 0.25, 0.10, function (creature) { creature.attackDamage += 3; creature.maxHealth -= 1; }),
+    "damage4": new StatTrait("damage", "Damage (4)", 4, 0.01, 0.01, 0.33, 0.25, function (creature) { creature.attackDamage += 4; creature.maxHealth -= 3; }),
+    "damage5": new StatTrait("damage", "Damage (5)", 5, 0.01, 0.01, 0.00, 0.33, function (creature) { creature.attackDamage += 5; creature.maxHealth -= 5; }),
+    "speed1": new StatTrait("speed", "Speed (1)", 1, 0.01, 0.01, 0.25, 0.00, function (creature) { creature.attackSpeed += 1; }),
+    "speed2": new StatTrait("speed", "Speed (2)", 2, 0.01, 0.01, 0.25, 0.10, function (creature) { creature.attackSpeed += 2; }),
+    "speed3": new StatTrait("speed", "Speed (3)", 3, 0.01, 0.01, 0.25, 0.10, function (creature) { creature.attackSpeed += 3; creature.armour -= 1; }),
+    "speed4": new StatTrait("speed", "Speed (4)", 4, 0.01, 0.01, 0.33, 0.25, function (creature) { creature.attackSpeed += 4; creature.armour -= 3; }),
+    "speed5": new StatTrait("speed", "Speed (5)", 5, 0.01, 0.01, 0.00, 0.33, function (creature) { creature.attackSpeed += 5; creature.armour -= 5; }),
+    ////////////////////////////////////////
+    // 			MISC TRAITS				  //
+    ////////////////////////////////////////
+    "cute1": new ValueTrait("cute", "Kinda Cute", 1, 0.01, 0.01, 0.10, 0.00, function (creature) { creature.value *= 1.05; }),
+    "cute2": new ValueTrait("cute", "Cute", 2, 0.01, 0.01, 0.10, 0.10, function (creature) { creature.value *= 1.10; }),
+    "cute3": new ValueTrait("cute", "Super Cute", 3, 0.01, 0.01, 0.00, 0.10, function (creature) { creature.value *= 1.15; }),
+    "ugly1": new ValueTrait("ugly", "Kinda Ugly", 1, 0.01, 0.01, 0.10, 0.00, function (creature) { creature.value *= 0.95; }),
+    "ugly2": new ValueTrait("ugly", "Ugly", 2, 0.01, 0.01, 0.10, 0.10, function (creature) { creature.value *= 0.90; }),
+    "ugly3": new ValueTrait("ugly", "Super Ugly", 3, 0.01, 0.01, 0.00, 0.10, function (creature) { creature.value *= 0.85; })
+};
 var Creature = /** @class */ (function () {
     function Creature(name, fertility, bodypartSlots, bodyparts) {
         this.name = name;
@@ -230,8 +109,8 @@ var Creature = /** @class */ (function () {
         var thisCreature = this;
         Object.keys(this.bodyparts).forEach(function (bodypart) {
             thisCreature.bodyparts[bodypart].traits.forEach(function (trait) {
-                if (trait["type"] == "stat") {
-                    trait["stats"](thisCreature);
+                if (trait instanceof StatTrait) {
+                    trait.stats(thisCreature);
                 }
             });
         });
@@ -251,7 +130,7 @@ var Creature = /** @class */ (function () {
             if (thisCreature.bodyparts[bodypart].traits.length > 0) {
                 bodypartsString += '(';
                 thisCreature.bodyparts[bodypart].traits.forEach(function (trait) {
-                    bodypartsString += trait.name + ", ";
+                    bodypartsString += trait.readableName + ", ";
                 });
                 bodypartsString = bodypartsString.slice(0, -2);
                 bodypartsString += ')';
@@ -337,6 +216,7 @@ var Bodypart = /** @class */ (function () {
             //TODO: CHECK THAT THERE ARE NO TYPE-DUPLICATES (e.g. Damage1 *and* Damage3)
             traits.push(trait);
         }
+        console.log(traits);
         return traits;
     };
     return Bodypart;
